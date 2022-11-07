@@ -2,10 +2,13 @@ class EvaluateExpression:
   valid_char = '0123456789+-*/() '
   
   def __init__(self, string=""):
+    # If string input is empty, expression is ''
     self._expression = ''
     for i in string:
+      # If element in string input is valid, expression is string itself
       if i in self.valid_char:
         self._expression = string
+      # Once element in string input is invalid, expression is '' and terminate the iteration
       else:
         self._expression = ''
         break
@@ -16,4 +19,5 @@ class EvaluateExpression:
 
   @expression.setter
   def expression(self, new_expr):
+    # Expression only be one at a time. Once it is newly defined, the __init__ method is called to determine the new expression
     self.__init__(new_expr)
