@@ -95,11 +95,9 @@ class EvaluateExpression:
           while not operator_stack.peek() == '(':
             self.process_operator(operand_stack, operator_stack)
           operator_stack.pop()
-      print(operand_stack.items, operator_stack.items)
     # The iteration through all the elements does not finish all the operation, because there will always remaining operands if the last operands:
     # 1. "*" or "/": 1 or 2 remianing operand(s)
     # 2. "+" or "-": 1 remaining operand
-    print(operand_stack.items, operator_stack.items)
     while not operator_stack.is_empty:
         self.process_operator(operand_stack, operator_stack)
     # While the operator is empty, meaning the operand only last one which is the result and pop it out
