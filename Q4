@@ -49,14 +49,18 @@ class EvaluateExpression:
   def insert_space(self):
     str_expression = self.expression
     opr_ls = []
+    # If element in the expression is an operator '+-*/()', put it into list
+    # If element appears more than one, not put into list
     for i in str_expression:
       if (i in self.valid_opr) and (i not in opr_ls):
         opr_ls += [i]
       else:
         pass
+    # Iterate over all elements in operator list
     for j in opr_ls:
       old_value = j
       new_value = " " + j + " "
+      # Because the method used is replace, similar operator is not needed to be put in list
       str_expression = str_expression.replace(old_value, new_value)
     return str_expression
 
@@ -68,6 +72,7 @@ class EvaluateExpression:
                       "-": first_value - second_value,
                       "*": first_value * second_value,
                       "/": first_value // second_value}
+    # The corresponding operation is based on the operator popped from operator stack
     result = dict_operator[operator_value]
     operand_stack.push(result)
     return result
