@@ -27,13 +27,17 @@ class EvaluateExpression:
     str_expression = self.expression
     opr_ls = []
     for i in str_expression:
+    # If element in the expression is an operator '+-*/()', put it into list
+    # If element appears more than one, not put into list
       if (i in self.valid_opr) and (i not in opr_ls):
         opr_ls += [i]
       else:
         pass
+    # Iterate over all elements in operator list
     for j in opr_ls:
       old_value = j
       new_value = " " + j + " "
+      # Because the method used is replace, similar operator is not needed to be put in list
       str_expression = str_expression.replace(old_value, new_value)
     return str_expression
 
@@ -45,7 +49,9 @@ class EvaluateExpression:
                       "-": first_value - second_value,
                       "*": first_value * second_value,
                       "/": first_value // second_value}
+    # The corresponding operation is based on the operator popped from operator stack
     result = dict_operator[operator_value]
+    # Str() function need to be implemented because all the conditions in token later will be based on string
     operand_stack.push(str(result))
     return result
 
@@ -53,32 +59,49 @@ class EvaluateExpression:
     operand_stack = Stack()
     operator_stack = Stack()
     expression = self.insert_space()
-    tokens = expression.split()
+    tokens = expression.split() # Split all the expression into a list
     for i in tokens:
+      # If element now is operand, push it into operand stack
       if i in self.valid_oprnd:
         operand_stack.push(i)
+      # If element now is operator, check it with condition which one to execute first
       else:
+        # If element now is whether "+" or "-"
         if i in self.valid_opr1:
           a = operator_stack.peek()
+          # If element before is whether "+" or "-" or "*" or "/", calculate it first. Because multiplication and division must be done first while addition and substraction don't affect anything but still need to operate it
           if a in self.valid_opr0:
             self.process_operator(operand_stack, operator_stack)
           else:
             pass
           operator_stack.push(i)
+        # If element now is whether "*" or "/"
         if i in self.valid_opr2:
           a = operator_stack.peek()
+          # If element before is whether "*" or "/", calculate it. Because addition and substraction must not be done first while multiplication and division don't affect anything but still need to operate it
           if a in self.valid_opr2:
             self.process_operator(operand_stack, operator_stack)
           else:
             pass
           operator_stack.push(i)
+        # If element now is '(', push it
         if (i == '('):
           operator_stack.push(i)
+        # If element now is ')', caulcate all from the element behind up to element front after ')'
         if (i == ')'):
+          # The calculation from behind doesn't change the result because the last calculation is whether: 
+          # 1. "*" or "/" with *+* or "-" before
+          # 2. "+" or "-" with nothing before
           while not operator_stack.peek() == '(':
             self.process_operator(operand_stack, operator_stack)
           operator_stack.pop()
+      print(operand_stack.items, operator_stack.items)
+    # The iteration through all the elements does not finish all the operation, because there will always remaining operands if the last operands:
+    # 1. "*" or "/": 1 or 2 remianing operand(s)
+    # 2. "+" or "-": 1 remaining operand
+    print(operand_stack.items, operator_stack.items)
     while not operator_stack.is_empty:
         self.process_operator(operand_stack, operator_stack)
+    # While the operator is empty, meaning the operand only last one which is the result and pop it out
     result_val = operand_stack.pop()
     return int(result_val)
