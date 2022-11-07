@@ -1,0 +1,19 @@
+class EvaluateExpression:
+  valid_char = '0123456789+-*/() '
+  
+  def __init__(self, string=""):
+    self._expression = ''
+    for i in string:
+      if i in self.valid_char:
+        self._expression = string
+      else:
+        self._expression = ''
+        break
+
+  @property
+  def expression(self):
+    return self._expression
+
+  @expression.setter
+  def expression(self, new_expr):
+    self.__init__(new_expr)
