@@ -22,16 +22,13 @@ class EvaluateExpression:
   def insert_space(self):
     str_expression = self.expression
     opr_ls = []
-    
     for i in str_expression:
       if (i in self.valid_opr) and (i not in opr_ls):
         opr_ls += [i]
       else:
         pass
-
     for j in opr_ls:
       old_value = j
       new_value = " " + j + " "
       str_expression = str_expression.replace(old_value, new_value)
-    
     return str_expression
