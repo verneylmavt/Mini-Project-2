@@ -12,13 +12,17 @@ class Stack:
             return None
         return self.__items[-1]
     @property
+    def items(self):
+        return self.__items
+    @property
+    def size(self):
+        return len(self.__items)
+    @property
     def is_empty(self):
         if len(self.__items) == 0:
             return True
         return False
-    @property
-    def size(self):
-        return len(self.__items)
+
 
 
 class EvaluateExpression:
@@ -65,5 +69,5 @@ class EvaluateExpression:
                       "*": first_value * second_value,
                       "/": first_value // second_value}
     result = dict_operator[operator_value]
-    operand_stack.push(result)
+    operand_stack.push(str(result))
     return result
