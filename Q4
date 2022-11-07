@@ -69,5 +69,5 @@ class EvaluateExpression:
                       "*": first_value * second_value,
                       "/": first_value // second_value}
     result = dict_operator[operator_value]
-    operand_stack.push(str(result))
+    operand_stack.push(result)
     return result
