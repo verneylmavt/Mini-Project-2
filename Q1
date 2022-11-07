@@ -8,10 +8,12 @@ def merge(array, arrayf, l, m, r):
 	left_pointer = 0
 	right_pointer = 0
 	dest = l
+	# Since the sort is based on new applied function, the comparison is also based on new applied function list
 	while (left_pointer < left_len) and (right_pointer < right_len):
-		# Compare values at pointers, then setting dest value
 		if left_arrayf[left_pointer] <= right_arrayf[right_pointer]:
+			# However, since the objective is to change the real list, the comparison made by new applied function list will change the real list
 			array[dest] = left_array[left_pointer]
+			# The new applied function list also need to be changed to keep track of the comparison
 			arrayf[dest] = left_arrayf[left_pointer]
 			left_pointer += 1
 		else:
@@ -38,8 +40,10 @@ def mergesort_recursive(array, arrayf, l, r):
 		merge(array, arrayf, l, m+1, r)
 
 def mergesort(array, byfunc=None):
+    # If function argument is not empty, new applied function list is created as a base to compare
 	if byfunc:
 		arrayf = [byfunc(i) for i in array]
+	# If function argument is empty, new applied function list is the real list itself
 	else:
 		arrayf = array
 	l = 0
