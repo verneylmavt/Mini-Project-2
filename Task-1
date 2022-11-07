@@ -1,0 +1,54 @@
+def merge(array, arrayf, l, m, r):
+	# Setting Array Parameters to be used (splitting the left and right arrays)
+	left_array = array[l:m]
+	left_arrayf = arrayf[l:m]
+	right_array = array[m:r+1]
+	right_arrayf = arrayf[m:r+1]
+	print(left_array, left_arrayf, right_array, right_arrayf)
+	left_len = len(left_arrayf)
+	right_len = len(right_arrayf)
+	left_pointer = 0
+	right_pointer = 0
+	dest = l # Destination of the number to be added
+	# While the pointers have not reached the end of their respective arrays
+	while (left_pointer < left_len) and (right_pointer < right_len):
+		# Compare values at pointers, then setting dest value
+		if left_arrayf[left_pointer] <= right_arrayf[right_pointer]:
+			array[dest] = left_array[left_pointer]
+			arrayf[dest] = left_arrayf[left_pointer]
+			left_pointer += 1
+		else:
+			array[dest] = right_array[right_pointer]
+			arrayf[dest] = right_arrayf[right_pointer]
+			right_pointer += 1
+		dest += 1
+	# Catching cases where one of the pointers have reached the end of their array
+	while (left_pointer < left_len):
+		array[dest] = left_array[left_pointer]
+		arrayf[dest] = left_arrayf[left_pointer]
+		left_pointer += 1
+		dest += 1
+	while (right_pointer < right_len):
+		array[dest] = right_array[right_pointer]
+		arrayf[dest] = right_arrayf[right_pointer]
+		right_pointer += 1
+		dest += 1
+
+# Recursive function which continually splits and merges the function
+def mergesort_recursive(array, arrayf, l, r):
+	if r-l > 0:
+		m = (l+r)//2 
+		mergesort_recursive(array, arrayf, l, m)
+		mergesort_recursive(array, arrayf, m+1, r)
+		merge(array, arrayf, l, m+1, r)
+
+# Helper function which gets the left and right index of the array
+def mergesort(array, byfunc=None):
+	if byfunc:
+		arrayf = [byfunc(i) for i in array]
+	else:
+		arrayf = array
+	print(arrayf, array)
+	l = 0
+	r = len(arrayf)-1
+	mergesort_recursive(array, arrayf, l, r)
