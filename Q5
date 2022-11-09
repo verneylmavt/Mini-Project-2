@@ -45,13 +45,19 @@ class EvaluateExpression:
     second_value = int(operand_stack.pop())
     first_value = int(operand_stack.pop())
     operator_value = operator_stack.pop()
-    dict_operator = {"+": first_value + second_value,
-                      "-": first_value - second_value,
-                      "*": first_value * second_value,
-                      "/": first_value // second_value}
-    # The corresponding operation is based on the operator popped from operator stack
-    result = dict_operator[operator_value]
-    # Str() function need to be implemented because all the conditions in token later will be based on string
+    # Check the operator value
+    if operator_value == "+":
+      result = first_value + second_value
+    elif operator_value == '-':
+      result = first_value - second_value
+    elif operator_value == '*':
+      result = first_value * second_value
+    elif operator_value == '/':
+      if second_value:
+        result = first_value // second_value
+      # If second_value == 0, raise "Division by Zero is undefined"
+      else:
+        raise Exception('Division by Zero is undefined')
     operand_stack.push(str(result))
     return result
 
